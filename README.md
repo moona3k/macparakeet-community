@@ -2,19 +2,23 @@
 
 Community hub for [MacParakeet](https://macparakeet.com) — the fastest, most private voice app for Mac.
 
-## What's Here
+## Report a Bug or Request a Feature
 
-- **Bug reports** — Found something broken? [Open an issue](https://github.com/moona3k/macparakeet-community/issues/new)
-- **Feature requests** — Have an idea? We'd love to hear it
-- **Changelogs** — What's new in each release
-- **Resources** — CLI docs, tips, and guides
+**From the app:** Settings > Help & Feedback. Your system info is attached automatically.
+
+**From here:** [Open an issue](https://github.com/moona3k/macparakeet-community/issues/new/choose) using one of our templates.
+
+## What's New
+
+See the [Changelog](CHANGELOG.md) for a detailed record of everything that's shipped.
 
 ## About MacParakeet
 
-MacParakeet is a fast, private, local-first voice app for macOS with two co-equal modes: system-wide dictation and file transcription. Powered by NVIDIA's Parakeet TDT via CoreML on the Neural Engine.
+MacParakeet is a local-first voice app for macOS with two co-equal modes: system-wide dictation and file transcription. Powered by NVIDIA's Parakeet TDT via CoreML on the Neural Engine.
 
-- 100% local — audio never leaves your Mac
-- Free during development
-- Apple Silicon optimized
+- **100% local** — audio never leaves your Mac
+- **Two modes** — system-wide dictation and file/YouTube transcription
+- **Apple Silicon** — three-chip architecture (CPU + GPU + Neural Engine)
+- **Free** during development
 
 [macparakeet.com](https://macparakeet.com)

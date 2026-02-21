@@ -1,0 +1,109 @@
+name: Bug Report
+description: Something isn't working as expected
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. The more detail you provide, the faster we can track it down.
+
+        > **Tip:** If you're reporting from within the app, use **Settings > Help & Feedback** instead — it auto-attaches your system info and version.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: What were you doing?
+      options:
+        - Dictating (system-wide voice input)
+        - Transcribing a file (audio or video)
+        - Transcribing a YouTube URL
+        - Using Command Mode (voice editing)
+        - Browsing dictation history
+        - Exporting a transcript
+        - Changing settings or vocabulary
+        - Installing or updating
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      placeholder: |
+        Describe the bug clearly. What did you see? What did you expect instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Walk us through exactly how to trigger this.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: "Settings > About, or click **Copy Build Info**."
+      placeholder: "e.g., 0.2.0 (42)"
+
+  - type: dropdown
+    id: macos
+    attributes:
+      label: macOS version
+      options:
+        - "15.x (Sequoia)"
+        - "14.x (Sonoma)"
+
+  - type: dropdown
+    id: chip
+    attributes:
+      label: Chip
+      options:
+        - M1
+        - M1 Pro / Max / Ultra
+        - M2
+        - M2 Pro / Max / Ultra
+        - M3
+        - M3 Pro / Max
+        - M4
+        - M4 Pro / Max
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often does this happen?
+      options:
+        - Every time
+        - Often (more than half the time)
+        - Sometimes
+        - Once so far
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log output (if applicable)
+      description: "Paste from `~/Library/Logs/MacParakeet/` or Console.app."
+      render: shell
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or screen recordings
+      description: Drag and drop here. Especially helpful for UI bugs.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched [existing issues](https://github.com/moona3k/macparakeet-community/issues) for duplicates
+          required: true
