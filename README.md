@@ -14,7 +14,7 @@ Community hub for [MacParakeet](https://macparakeet.com) — the fastest, most p
 MacParakeet is a fast, private, local-first voice app for macOS with two co-equal modes: system-wide dictation and file transcription. Powered by NVIDIA's Parakeet TDT via CoreML on the Neural Engine.
 
 - 100% local — audio never leaves your Mac
-- One-time purchase ($49) — no subscriptions
+- Free during development
 - Apple Silicon optimized
 
 [macparakeet.com](https://macparakeet.com)
