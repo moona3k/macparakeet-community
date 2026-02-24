@@ -8,7 +8,7 @@ body:
       value: |
         Thanks for taking the time to report this. The more detail you provide, the faster we can track it down.
 
-        > **Tip:** If you're reporting from within the app, use **Settings > Help & Feedback** instead — it auto-attaches your system info and version.
+        > **Tip:** You can also report bugs from within the app — click **Feedback** in the sidebar. System info and version are attached automatically.
 
   - type: dropdown
     id: area
@@ -18,7 +18,6 @@ body:
         - Dictating (system-wide voice input)
         - Transcribing a file (audio or video)
         - Transcribing a YouTube URL
-        - Using Command Mode (voice editing)
         - Browsing dictation history
         - Exporting a transcript
         - Changing settings or vocabulary
