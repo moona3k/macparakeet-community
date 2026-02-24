@@ -18,7 +18,7 @@ MacParakeet is a local-first voice app for macOS with two co-equal modes: system
 
 - **100% local** — audio never leaves your Mac
 - **Two modes** — system-wide dictation and file/YouTube transcription
-- **Apple Silicon** — three-chip architecture (CPU + GPU + Neural Engine)
+- **Apple Silicon** — two-chip architecture (CPU + Neural Engine), ~300 MB peak memory
 - **Free** during development
 
 [macparakeet.com](https://macparakeet.com)

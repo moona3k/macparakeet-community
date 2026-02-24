@@ -6,15 +6,44 @@ MacParakeet is in active development. This changelog tracks what's been built an
 
 ---
 
-## Unreleased
+## v0.4 — LLM Removal and Streamlining
 
-### Command Mode (in progress)
+Removed all local LLM features (Qwen3-8B / MLX-Swift). Parakeet STT is fast (~155x realtime), but the LLM added unacceptable latency for text refinement, command mode, and chat. Rather than ship slow features, we cut them to keep MacParakeet focused on what it does best: fast local dictation and transcription.
 
-Voice-driven text editing. Select text anywhere on your Mac, speak a command, and the local LLM rewrites it in place.
+### What was removed
 
-- Core command services and hotkey arbitration
-- Command overlay with selection preview
-- Accessibility-based text capture and replacement
+- **AI Text Refinement** — Formal, email, and code processing modes (powered by Qwen3-8B)
+- **Command Mode** — Highlight text + voice command for LLM-powered in-place editing
+- **Chat with Transcript** — Ask questions about transcriptions via local LLM
+- **`mlx-swift-lm` dependency** — MLX-Swift and all Metal shader compilation
+- **`macparakeet-cli llm`** — CLI subcommand for LLM operations
+
+### What stays
+
+Dictation, file transcription, YouTube URL transcription, export (TXT/MD/SRT/VTT), dictation history, custom words, text snippets, and the clean text pipeline — all unchanged.
+
+### Impact
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Peak memory | ~5.3 GB | ~300 MB |
+| Architecture | 3-chip (CPU/GPU/ANE) | 2-chip (CPU/ANE) |
+| Processing modes | 5 (raw, clean, formal, email, code) | 2 (raw, clean) |
+| Package deps | 4 | 3 (removed mlx-swift-lm) |
+
+### Bug fixes
+
+- **Deprecated mode fallback** — Users who had "formal", "email", or "code" stored in UserDefaults were silently downgraded to raw mode (no processing). Now correctly falls back to clean mode.
+- **Onboarding offline regression** — Users who reset onboarding while offline were blocked even if the speech model was already cached. Fixed to skip network checks when the model exists locally.
+- **Stale UI strings** — "Local Models" → "Speech Model", "Repair All" → "Repair", "10 GB" → "7 GB"
+
+### A note on local LLM features
+
+We plan to bring these back. The capability isn't the problem — Qwen3-8B is a solid general-purpose model for its size — the problem is speed. On-device inference on Apple Silicon (even with MLX) tops out around 25 tokens/sec for 8B models, and that's on high-end machines. For interactive use cases like command mode and text refinement, that latency turns a feature that should feel instant into one that feels annoying.
+
+For context: cloud models like Claude Opus 4.6 and Gemini 3 Pro operate at a completely different level of both intelligence and throughput. Local models aren't there yet, and we don't want to ship something that feels like a compromise.
+
+We're actively monitoring local model releases — smaller architectures, faster inference engines, speculative decoding, and hardware improvements. When internal testing shows that on-device LLM features are fast enough to be genuinely delightful rather than merely functional, we'll bring them back. Until then, MacParakeet stays focused on what it already does at world-class speed: local speech-to-text.
 
 ### Coming Soon
 
@@ -36,14 +65,9 @@ Paste a YouTube URL and get a full transcript — no browser extensions, no clou
 - Audio chunking for long videos (1hr+ content works reliably)
 - Option to keep or auto-delete downloaded audio after transcription
 
-### Chat with Transcript
+### ~~Chat with Transcript~~ *(removed in v0.4)*
 
-Ask questions about any transcription using the local Qwen3-8B model. Great for pulling out key points, summarizing meetings, or finding specific moments.
-
-- Chat panel alongside transcript results
-- Full transcript context via 128K token window
-- Suggested prompt chips for common questions
-- Works entirely offline — your transcripts stay private
+~~Ask questions about any transcription using the local Qwen3-8B model.~~ Removed due to LLM latency. See [v0.4](#v04--llm-removal-and-streamlining).
 
 ### Export Formats
 
@@ -67,15 +91,9 @@ A deterministic four-step pipeline that cleans up raw dictation before you see i
 3. **Snippet expansion** — Expands trigger phrases into full text (e.g., "my signature" → your full sign-off)
 4. **Whitespace normalization** — Cleans up double spaces, leading/trailing whitespace
 
-### AI Text Refinement
+### ~~AI Text Refinement~~ *(removed in v0.4)*
 
-When the deterministic pipeline isn't enough, Qwen3-8B refines your text locally on the GPU. Three modes:
-
-- **Formal** — Professional tone, complete sentences, proper grammar
-- **Email** — Ready-to-send email format with greeting and sign-off
-- **Code** — Technical documentation style, precise terminology
-
-Falls back gracefully to the deterministic pipeline if the LLM is unavailable.
+~~Qwen3-8B text refinement with formal, email, and code modes.~~ Removed due to LLM latency. See [v0.4](#v04--llm-removal-and-streamlining).
 
 ### Custom Words and Snippets
 
@@ -93,11 +111,10 @@ Moved the entire speech-to-text pipeline from a Python daemon to native Swift vi
 - Parakeet TDT runs directly on the Neural Engine (ANE) — no Python, no GPU contention
 - ~66 MB working memory during inference (down from ~2 GB on GPU)
 - ~155x realtime speed on Apple Silicon
-- Freed the GPU entirely for Qwen3-8B LLM tasks
 
 ### Local Model Management
 
-Full lifecycle management for both local models (Parakeet STT + Qwen3-8B LLM).
+Lifecycle management for the Parakeet speech model.
 
 - Status panel in Settings showing model state (Ready / Not Loaded / Not Downloaded)
 - One-click repair with automatic retry and exponential backoff
@@ -173,9 +190,9 @@ Guided setup that walks new users through permissions, hotkey basics, and local 
 ### Architecture
 
 - **100% local** — audio never leaves your Mac
-- **Three-chip architecture**: CPU (app), GPU (Qwen3-8B via Metal), ANE (Parakeet via CoreML)
+- **Two-chip architecture**: CPU (app) + ANE (Parakeet via CoreML)
 - **Parakeet TDT 0.6B-v3** — ~2.5% word error rate, 155x realtime on Apple Silicon
-- **Qwen3-8B** — 128K context, 4-bit quantization, ~5 GB GPU RAM
+- **~300 MB peak memory** — lightweight, GPU-free
 - **SQLite** (GRDB) for dictation history and transcription records
 - macOS 14.2+ on Apple Silicon
 
@@ -193,11 +210,6 @@ macparakeet-cli flow process <text>           Run the clean text pipeline
 macparakeet-cli flow words [list|add|delete]  Manage custom words
 macparakeet-cli flow snippets [list|add|del]  Manage text snippets
 macparakeet-cli models [status|warm-up|repair] Model lifecycle management
-macparakeet-cli llm generate <prompt>         Generate text with Qwen3-8B
-macparakeet-cli llm refine <mode> <text>      Refine text (formal/email/code)
-macparakeet-cli llm command <cmd> <text>      Voice command simulation
-macparakeet-cli llm chat <question>           Chat with optional transcript context
-macparakeet-cli llm smoke-test                Quick model readiness check
 ```
 
 ---
