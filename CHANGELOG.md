@@ -6,9 +6,40 @@ MacParakeet is in active development. This changelog tracks what's been built an
 
 ---
 
-## v0.4 — LLM Removal and Streamlining
+## v0.4 — Streamlining and Polish
 
-Removed all local LLM features (Qwen3-8B / MLX-Swift). Parakeet STT is fast (~155x realtime), but the LLM added unacceptable latency for text refinement, command mode, and chat. Rather than ship slow features, we cut them to keep MacParakeet focused on what it does best: fast local dictation and transcription.
+A focused release: remove everything that's slow, polish everything that stays.
+
+We removed all local LLM features (Qwen3-8B / MLX-Swift) — Parakeet STT is fast (~155x realtime), but the LLM added unacceptable latency for text refinement, command mode, and chat. Rather than ship slow features, we cut them to keep MacParakeet focused on what it does best: fast local dictation and transcription. Then we polished the core experience.
+
+### Voice Stats Dashboard
+
+Your dictation history now opens with a stats overview showing how much value you're getting from MacParakeet.
+
+- **Total Words** — lifetime word count with real-world comparison ("59 emails worth")
+- **Time Speaking** — cumulative dictation duration with session count
+- **Voice Speed** — average words per minute with pace classification ("Conversational pace", "Fast talker")
+- **Time Saved** — estimated hours saved vs typing at 40 WPM
+- **Weekly Streak** — consecutive weeks with at least one dictation
+- **Fun comparisons** — milestone banners ("That's 59 emails worth of voice!")
+- Stats scroll with the dictation list rather than eating screen space
+
+### UI Copy Polish
+
+Replaced ~15 instances of developer jargon with user-friendly language across the app.
+
+- "Uses bundled yt-dlp and FFmpeg" → "Downloads from YouTube, then transcribes entirely on your Mac"
+- "Deterministic pipeline rules" → "Polishes your text — removes fillers, fixes words, expands snippets"
+- "Casing anchors" → "Capitalization"
+- "155x realtime" → "Blazing fast"
+- "Pipeline transforms are bypassed" → "Text processing is off"
+- Apple Silicon requirement error now mentions M1 and is more empathetic
+
+### Feedback Improvements
+
+- Screenshot attachment upgraded from a file picker button to a drag-and-drop zone ("Drop an image or click to browse")
+- Dashed border with accent highlight on drag-over
+- Compact filename display with one-click remove when attached
 
 ### What was removed
 
