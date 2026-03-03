@@ -30,6 +30,15 @@ Drop audio/video files directly onto the menu bar icon to start transcription. N
 
 New toggle: "Show dictation pill at all times." Turn it off and the pill only appears while actively recording — gone when idle.
 
+### Dictation Mode Discoverability
+
+Redesigned how users learn the two dictation modes:
+
+- **Onboarding** — Step 4 replaced with two animated mode cards (Persistent Mode and Push-to-Talk) with gesture illustrations instead of a numbered text list
+- **Settings** — New quick-reference strip in the Dictation card showing both modes with key cap visuals; updates reactively when you change your hotkey
+
+Shipped in response to community feedback ([#5](https://github.com/moona3k/macparakeet-community/issues/5), [#6](https://github.com/moona3k/macparakeet-community/issues/6)).
+
 ### Voice Stats Dashboard
 
 Dictation history now opens with a stats overview:
