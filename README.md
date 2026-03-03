@@ -4,7 +4,7 @@
 
 Speak anywhere on macOS and your words become text — instantly, locally, privately. Transcribe files and YouTube videos with a single drag-and-drop. No cloud. No subscription. No account.
 
-**[$49 one-time purchase](https://macparakeet.com) · 7-day free trial**
+**[Free during development](https://macparakeet.com)**
 
 ---
 
@@ -38,7 +38,7 @@ Drag audio or video files onto the app (or the menu bar icon) and get a full tra
 | **Fast** | Parakeet TDT on the Neural Engine — 155x realtime (~23 sec for 60 min of audio) |
 | **Lightweight** | ~300 MB peak memory. Runs on the Neural Engine, not the GPU. |
 | **Accurate** | ~2.5% word error rate with NVIDIA's Parakeet TDT 0.6B-v3 |
-| **One-time purchase** | $49, yours forever. No subscription, no account. |
+| **Free** | Free while in development. No subscription, no account. |
 
 ---
 
