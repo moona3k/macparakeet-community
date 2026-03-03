@@ -8,52 +8,54 @@ MacParakeet is in active development. This changelog tracks what's been built an
 
 ## v0.4 — Streamlining and Polish
 
-A focused release: remove everything that's slow, polish everything that stays.
+Cut everything slow, ship everything useful, polish what stays.
 
-We removed all local LLM features (Qwen3-8B / MLX-Swift) — Parakeet STT is fast (~155x realtime), but the LLM added unacceptable latency for text refinement, command mode, and chat. Rather than ship slow features, we cut them to keep MacParakeet focused on what it does best: fast local dictation and transcription. Then we polished the core experience.
+### Custom Hotkey Support
+
+Set any single key as your dictation trigger — not just modifier keys. A key recorder in Settings lets you press the key you want and see it applied immediately. Supports letters, numbers, punctuation, function keys, and all modifier keys.
+
+### DOCX, PDF, and JSON Export
+
+Three new export formats join TXT, Markdown, SRT, and VTT:
+
+- **DOCX** — Word document with timestamps and formatting
+- **PDF** — Print-ready transcript
+- **JSON** — Structured data with word-level timestamps and confidence scores
+
+### Menu Bar Drag-and-Drop
+
+Drop audio/video files directly onto the menu bar icon to start transcription. No need to open the main window first.
+
+### Hide Dictation Pill
+
+New toggle: "Show dictation pill at all times." Turn it off and the pill only appears while actively recording — gone when idle.
 
 ### Voice Stats Dashboard
 
-Your dictation history now opens with a stats overview showing how much value you're getting from MacParakeet.
+Dictation history now opens with a stats overview:
 
-- **Total Words** — lifetime word count with real-world comparison ("59 emails worth")
-- **Time Speaking** — cumulative dictation duration with session count
-- **Voice Speed** — average words per minute with pace classification ("Conversational pace", "Fast talker")
+- **Total Words** — lifetime count with real-world comparison ("59 emails worth")
+- **Time Speaking** — cumulative duration with session count
+- **Voice Speed** — average WPM with pace classification
 - **Time Saved** — estimated hours saved vs typing at 40 WPM
 - **Weekly Streak** — consecutive weeks with at least one dictation
-- **Fun comparisons** — milestone banners ("That's 59 emails worth of voice!")
-- Stats scroll with the dictation list rather than eating screen space
 
-### UI Copy Polish
+### UI Polish
 
-Replaced ~15 instances of developer jargon with user-friendly language across the app.
+- Switch toggles in Settings (replacing checkboxes)
+- Sidebar reorganized into labeled sections
+- Feedback form tightened — email and screenshot side-by-side, drag-and-drop screenshot zone
+- ~15 developer jargon strings replaced with user-friendly copy
+- New app icon
+- Grid card layout fixes across Feedback and Settings
 
-- "Uses bundled yt-dlp and FFmpeg" → "Downloads from YouTube, then transcribes entirely on your Mac"
-- "Deterministic pipeline rules" → "Polishes your text — removes fillers, fixes words, expands snippets"
-- "Casing anchors" → "Capitalization"
-- "155x realtime" → "Blazing fast"
-- "Pipeline transforms are bypassed" → "Text processing is off"
-- Apple Silicon requirement error now mentions M1 and is more empathetic
+### LLM Removal
 
-### Feedback Improvements
+Removed all local LLM features (Qwen3-8B / MLX-Swift). Parakeet STT is fast (~155x realtime), but the LLM added unacceptable latency for text refinement, command mode, and chat. Rather than ship slow features, we cut them.
 
-- Screenshot attachment upgraded from a file picker button to a drag-and-drop zone ("Drop an image or click to browse")
-- Dashed border with accent highlight on drag-over
-- Compact filename display with one-click remove when attached
+**Removed:** AI Text Refinement (formal/email/code modes), Command Mode, Chat with Transcript, `mlx-swift-lm` dependency, `macparakeet-cli llm`.
 
-### What was removed
-
-- **AI Text Refinement** — Formal, email, and code processing modes (powered by Qwen3-8B)
-- **Command Mode** — Highlight text + voice command for LLM-powered in-place editing
-- **Chat with Transcript** — Ask questions about transcriptions via local LLM
-- **`mlx-swift-lm` dependency** — MLX-Swift and all Metal shader compilation
-- **`macparakeet-cli llm`** — CLI subcommand for LLM operations
-
-### What stays
-
-Dictation, file transcription, YouTube URL transcription, export (TXT/MD/SRT/VTT), dictation history, custom words, text snippets, and the clean text pipeline — all unchanged.
-
-### Impact
+**Kept:** Dictation, file transcription, YouTube transcription, all 7 export formats, dictation history, custom words, text snippets, clean text pipeline.
 
 | Metric | Before | After |
 |--------|--------|-------|
@@ -62,23 +64,20 @@ Dictation, file transcription, YouTube URL transcription, export (TXT/MD/SRT/VTT
 | Processing modes | 5 (raw, clean, formal, email, code) | 2 (raw, clean) |
 | Package deps | 4 | 3 (removed mlx-swift-lm) |
 
-### Bug fixes
+We'll bring LLM features back when on-device inference is fast enough to feel instant rather than annoying. Monitoring smaller architectures, speculative decoding, and hardware improvements.
 
-- **Deprecated mode fallback** — Users who had "formal", "email", or "code" stored in UserDefaults were silently downgraded to raw mode (no processing). Now correctly falls back to clean mode.
-- **Onboarding offline regression** — Users who reset onboarding while offline were blocked even if the speech model was already cached. Fixed to skip network checks when the model exists locally.
-- **Stale UI strings** — "Local Models" → "Speech Model", "Repair All" → "Repair", "10 GB" → "7 GB"
+### Bug Fixes
 
-### A note on local LLM features
-
-We plan to bring these back. The capability isn't the problem — Qwen3-8B is a solid general-purpose model for its size — the problem is speed. On-device inference on Apple Silicon (even with MLX) tops out around 25 tokens/sec for 8B models, and that's on high-end machines. For interactive use cases like command mode and text refinement, that latency turns a feature that should feel instant into one that feels annoying.
-
-For context: cloud models like Claude Opus 4.6 and Gemini 3 Pro operate at a completely different level of both intelligence and throughput. Local models aren't there yet, and we don't want to ship something that feels like a compromise.
-
-We're actively monitoring local model releases — smaller architectures, faster inference engines, speculative decoding, and hardware improvements. When internal testing shows that on-device LLM features are fast enough to be genuinely delightful rather than merely functional, we'll bring them back. Until then, MacParakeet stays focused on what it already does at world-class speed: local speech-to-text.
+- **FFmpeg audio conversion failure** — Video file transcription could fail silently on certain containers. Now surfaces clear error messages.
+- **FFmpeg discovery** — Extended PATH search for debug builds so FFmpeg is found reliably.
+- **YouTube progress bar stuck at 0%** — Fixed download progress parsing.
+- **Disk image guard** — App now detects if it's running from a DMG and prompts the user to move it to Applications first.
+- **Deprecated mode fallback** — Users with "formal"/"email"/"code" in UserDefaults now correctly fall back to clean mode (was silently falling back to raw).
+- **Onboarding offline regression** — Skip network checks when the speech model is already cached locally.
+- **Stats word count accuracy** — Fixed counting for non-space whitespace and long space runs; moved word counting from SQL to Swift.
 
 ### Coming Soon
 
-- Additional export formats (DOCX, PDF, JSON)
 - Speaker diarization
 - Batch file processing
 - Whisper mode (optimized for quiet speech)
@@ -98,7 +97,7 @@ Paste a YouTube URL and get a full transcript — no browser extensions, no clou
 
 ### ~~Chat with Transcript~~ *(removed in v0.4)*
 
-~~Ask questions about any transcription using the local Qwen3-8B model.~~ Removed due to LLM latency. See [v0.4](#v04--llm-removal-and-streamlining).
+~~Ask questions about any transcription using the local Qwen3-8B model.~~ Removed due to LLM latency. See [v0.4](#v04--streamlining-and-polish).
 
 ### Export Formats
 
@@ -108,6 +107,7 @@ Export transcriptions in the format that fits your workflow.
 - **Markdown** — Structured with timestamps as headings
 - **SRT** — Industry-standard subtitle format
 - **VTT** — Web-native subtitle format (WebVTT)
+- **DOCX, PDF, JSON** — Added in [v0.4](#v04--streamlining-and-polish)
 
 ---
 
@@ -124,7 +124,7 @@ A deterministic four-step pipeline that cleans up raw dictation before you see i
 
 ### ~~AI Text Refinement~~ *(removed in v0.4)*
 
-~~Qwen3-8B text refinement with formal, email, and code modes.~~ Removed due to LLM latency. See [v0.4](#v04--llm-removal-and-streamlining).
+~~Qwen3-8B text refinement with formal, email, and code modes.~~ Removed due to LLM latency. See [v0.4](#v04--streamlining-and-polish).
 
 ### Custom Words and Snippets
 
