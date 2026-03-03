@@ -18,6 +18,7 @@ Press your hotkey in any app — Mail, Slack, VS Code, anything — and start ta
 - **Hold** for push-to-talk (release to stop)
 - Text is pasted automatically; your clipboard is never overwritten
 - Compact overlay shows waveform and timer without stealing focus
+- Every dictation is saved to your history — if the paste doesn't land, grab it from the Dictations tab
 
 ### File & YouTube Transcription
 
