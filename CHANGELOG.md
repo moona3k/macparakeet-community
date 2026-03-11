@@ -75,8 +75,20 @@ Removed all local LLM features (Qwen3-8B / MLX-Swift). Parakeet STT is fast (~15
 
 We'll bring LLM features back when on-device inference is fast enough to feel instant rather than annoying. Monitoring smaller architectures, speculative decoding, and hardware improvements.
 
+### Speaker Diarization (CLI Preview)
+
+Identify who said what. The CLI now supports speaker diarization for file transcription via `--diarize`:
+
+```
+macparakeet-cli transcribe recording.mp3 --diarize
+```
+
+Speaker labels appear in all output formats (text, SRT, VTT, JSON). GUI support coming soon.
+
 ### Bug Fixes
 
+- **Export confirmation blank on first use** — The popover after exporting showed just "Exported" with no format, filename, or "Show in Finder" button on the first export. Fixed by making the popover data-driven ([#9](https://github.com/moona3k/macparakeet-community/issues/9)).
+- **PDF export deadlock** — PDF export could freeze the app. Replaced `NSPrintOperation` with a direct `CGContext` renderer.
 - **FFmpeg audio conversion failure** — Video file transcription could fail silently on certain containers. Now surfaces clear error messages.
 - **FFmpeg discovery** — Extended PATH search for debug builds so FFmpeg is found reliably.
 - **YouTube progress bar stuck at 0%** — Fixed download progress parsing.
