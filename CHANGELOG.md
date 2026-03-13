@@ -10,6 +10,16 @@ MacParakeet is in active development. This changelog tracks what's been built an
 
 Cut everything slow, ship everything useful, polish what stays.
 
+### Auto-Updates
+
+MacParakeet now updates itself. When a new version is available, you'll see a native update dialog — click "Install Update" and the app downloads, installs, and relaunches automatically. No more manual DMG re-downloads.
+
+- Automatic background update checks (configurable in Settings > Updates)
+- Manual "Check for Updates..." in the app menu and menu bar dropdown
+- Secure EdDSA-signed updates via [Sparkle](https://sparkle-project.org/)
+
+Shipped in response to community feedback ([#11](https://github.com/moona3k/macparakeet-community/issues/11)).
+
 ### Custom Hotkey Support
 
 Set any single key as your dictation trigger — not just modifier keys. A key recorder in Settings lets you press the key you want and see it applied immediately. Supports letters, numbers, punctuation, function keys, and all modifier keys.
