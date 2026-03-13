@@ -10,6 +10,31 @@ MacParakeet is in active development. This changelog tracks what's been built an
 
 Cut everything slow, ship everything useful, polish what stays.
 
+### LLM Provider Integration
+
+Bring your own API key and unlock AI-powered transcript features. Connect any OpenAI-compatible provider — or Anthropic and Ollama natively — and get instant summaries and conversational Q&A for any transcription.
+
+- **Summary tab** — One-click transcript summary, persisted per transcription
+- **Chat tab** — Ask questions about the transcript with full conversation history
+- **Providers** — OpenAI, Anthropic, Ollama (local), OpenRouter, or any OpenAI-compatible endpoint
+- **Dynamic model lists** — Models fetched from your provider automatically
+- **Settings card** — Configure provider, API key, and model from Transcription settings
+- Streaming responses with markdown rendering
+
+100% optional — MacParakeet works fully offline without any LLM provider configured.
+
+### Private Dictation Mode
+
+New toggle in Settings: turn off dictation history saving entirely. When enabled, dictated text is pasted as usual but nothing is stored in the database — no transcript, no audio, no history entry. For users who want dictation without a paper trail.
+
+Shipped in response to community feedback ([#14](https://github.com/moona3k/macparakeet-community/issues/14)).
+
+### Newline Support in Text Snippets
+
+Text snippets now support `\n` as a newline escape. A snippet with the replacement `Line one\nLine two` expands to actual multi-line text. Useful for signatures, email templates, and formatted blocks.
+
+Shipped in response to community feedback ([#16](https://github.com/moona3k/macparakeet-community/issues/16)).
+
 ### Auto-Updates
 
 MacParakeet now updates itself. When a new version is available, you'll see a native update dialog — click "Install Update" and the app downloads, installs, and relaunches automatically. No more manual DMG re-downloads.
@@ -68,22 +93,21 @@ Dictation history now opens with a stats overview:
 - New app icon
 - Grid card layout fixes across Feedback and Settings
 
-### LLM Removal
+### Local LLM Removal → Cloud LLM Integration
 
-Removed all local LLM features (Qwen3-8B / MLX-Swift). Parakeet STT is fast (~155x realtime), but the LLM added unacceptable latency for text refinement, command mode, and chat. Rather than ship slow features, we cut them.
+Removed all local LLM features (Qwen3-8B / MLX-Swift) due to unacceptable on-device latency, then re-introduced LLM capabilities via cloud API providers. The result: fast, high-quality AI features without the GPU memory overhead.
 
-**Removed:** AI Text Refinement (formal/email/code modes), Command Mode, Chat with Transcript, `mlx-swift-lm` dependency, `macparakeet-cli llm`.
+**Removed:** Local Qwen3-8B inference, `mlx-swift-lm` dependency, AI Text Refinement modes (formal/email/code), Command Mode.
 
-**Kept:** Dictation, file transcription, YouTube transcription, all 7 export formats, dictation history, custom words, text snippets, clean text pipeline.
+**Replaced with:** Cloud-powered summary and chat via bring-your-own-API-key (see [LLM Provider Integration](#llm-provider-integration) above).
 
-| Metric | Before | After |
+| Metric | Local LLM (before) | Cloud LLM (after) |
 |--------|--------|-------|
 | Peak memory | ~5.3 GB | ~300 MB |
 | Architecture | 3-chip (CPU/GPU/ANE) | 2-chip (CPU/ANE) |
-| Processing modes | 5 (raw, clean, formal, email, code) | 2 (raw, clean) |
-| Package deps | 4 | 3 (removed mlx-swift-lm) |
-
-We'll bring LLM features back when on-device inference is fast enough to feel instant rather than annoying. Monitoring smaller architectures, speculative decoding, and hardware improvements.
+| Response quality | Limited by 8B model | GPT-4o / Claude / any provider |
+| Latency | 5-15s local inference | ~1-3s streaming |
+| Package deps | 4 | 4 (replaced mlx-swift-lm with Sparkle) |
 
 ### Speaker Diarization (CLI Preview)
 
@@ -106,10 +130,14 @@ Speaker labels appear in all output formats (text, SRT, VTT, JSON). GUI support 
 - **Deprecated mode fallback** — Users with "formal"/"email"/"code" in UserDefaults now correctly fall back to clean mode (was silently falling back to raw).
 - **Onboarding offline regression** — Skip network checks when the speech model is already cached locally.
 - **Stats word count accuracy** — Fixed counting for non-space whitespace and long space runs; moved word counting from SQL to Swift.
+- **Dictation history not refreshing after Clear All** — History list required a restart to reflect cleared entries. Now refreshes immediately ([#12](https://github.com/moona3k/macparakeet-community/issues/12)).
+- **Ollama URL builder crash** — Force-unwrap on malformed Ollama base URLs could crash the app. Now uses safe URL construction.
+- **Main window closing in menu bar mode** — Toggling menu-bar-only mode could dismiss the main window unexpectedly.
+- **Summary persisting to wrong transcription** — Navigating to a different transcript mid-stream could save the summary to the wrong record.
 
 ### Coming Soon
 
-- Speaker diarization
+- Speaker diarization (GUI)
 - Batch file processing
 - Whisper mode (optimized for quiet speech)
 
