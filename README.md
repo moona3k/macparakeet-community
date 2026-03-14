@@ -16,6 +16,7 @@ Press your hotkey in any app — Mail, Slack, VS Code, anything — and start ta
 
 - **Double-tap** for persistent recording (tap again to stop)
 - **Hold** for push-to-talk (release to stop)
+- Customizable hotkey — single key or modifier+key chord (e.g., Cmd+9)
 - Text is pasted automatically; your clipboard is never overwritten
 - Compact overlay shows waveform and timer without stealing focus
 - Every dictation is saved to your history — if the paste doesn't land, grab it from the Dictations tab
@@ -26,6 +27,7 @@ Drag audio or video files onto the app (or the menu bar icon) and get a full tra
 
 - MP3, WAV, M4A, FLAC, MP4, MOV, MKV, and more
 - Paste a YouTube URL for instant local transcription
+- **Speaker diarization** — detect and label individual speakers, rename inline
 - Export as TXT, Markdown, SRT, VTT, DOCX, PDF, or JSON
 - Word-level timestamps and confidence scores
 

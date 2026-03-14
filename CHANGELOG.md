@@ -47,7 +47,7 @@ Shipped in response to community feedback ([#11](https://github.com/moona3k/macp
 
 ### Custom Hotkey Support
 
-Set any single key as your dictation trigger — not just modifier keys. A key recorder in Settings lets you press the key you want and see it applied immediately. Supports letters, numbers, punctuation, function keys, and all modifier keys.
+Set any single key — or modifier+key chord — as your dictation trigger. A key recorder in Settings lets you press the key you want and see it applied immediately. Supports letters, numbers, punctuation, function keys, modifier keys, and modifier+key combos (e.g., Cmd+9). See also [Chord Hotkey Support](#chord-hotkey-support).
 
 ### DOCX, PDF, and JSON Export
 
@@ -109,15 +109,22 @@ Removed all local LLM features (Qwen3-8B / MLX-Swift) due to unacceptable on-dev
 | Latency | 5-15s local inference | ~1-3s streaming |
 | Package deps | 4 | 4 (replaced mlx-swift-lm with Sparkle) |
 
-### Speaker Diarization (CLI Preview)
+### Speaker Diarization
 
-Identify who said what. The CLI now supports speaker diarization for file transcription via `--diarize`:
+Identify who said what. MacParakeet can now detect and label individual speakers in any transcription.
 
-```
-macparakeet-cli transcribe recording.mp3 --diarize
-```
+- **GUI** — Speaker summary panel shows each speaker with word count and speaking time. Click any speaker label to rename (e.g., "Speaker 1" → "Alice").
+- **CLI** — `macparakeet-cli transcribe recording.mp3 --diarize`
+- **Inline labels** — Speaker turns appear in the transcript view and all export formats (TXT, Markdown, SRT, VTT, DOCX, PDF, JSON)
+- Powered by FluidAudio's Sortformer diarization model, running locally on the Neural Engine
 
-Speaker labels appear in all output formats (text, SRT, VTT, JSON). GUI support coming soon.
+### Chord Hotkey Support
+
+Dictation trigger now supports modifier+key combos — not just single keys. Set Cmd+9, Option+Space, Ctrl+Shift+D, or any modifier combination as your hotkey. The key recorder in Settings captures the full chord.
+
+### Non-blocking Transcription Progress
+
+File transcription no longer blocks the UI. A progress bar in the bottom bar shows transcription status while you continue using the app — browse history, read other transcripts, or keep dictating.
 
 ### Bug Fixes
 
@@ -134,12 +141,14 @@ Speaker labels appear in all output formats (text, SRT, VTT, JSON). GUI support 
 - **Ollama URL builder crash** — Force-unwrap on malformed Ollama base URLs could crash the app. Now uses safe URL construction.
 - **Main window closing in menu bar mode** — Toggling menu-bar-only mode could dismiss the main window unexpectedly.
 - **Summary persisting to wrong transcription** — Navigating to a different transcript mid-stream could save the summary to the wrong record.
+- **Dictation pasting empty text** — When "Save Dictation History" was off, dictation could paste empty text instead of the transcription.
+- **Export race condition** — Rapid exports could collide; speaker rename text field lost focus on save.
+- **LLM custom model validation** — Custom model names weren't validated before sending to the provider.
+- **Chord hotkey edge cases** — Fixed modifier-only chords and key-up detection for chord combos.
 
 ### Coming Soon
 
-- Speaker diarization (GUI)
 - Batch file processing
-- Whisper mode (optimized for quiet speech)
 
 ---
 
