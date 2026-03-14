@@ -122,6 +122,16 @@ Identify who said what. MacParakeet can now detect and label individual speakers
 
 Set modifier+key combos as your dictation trigger — not just single keys. Cmd+9, Option+Space, Ctrl+Shift+D, or any combination you like. The key recorder in Settings captures the full chord.
 
+### Discover
+
+A curated reading surface in the sidebar. Suppressed patents, buried science, ancient wisdom — things worth knowing that don't make it into the mainstream.
+
+- **Sidebar card** — Rotating preview pinned below the sidebar, cycles through content every 30 seconds
+- **Full feed** — Scrollable detail view with editorial card design, watermark icons, and typographic treatments (serif for quotes, rounded for affirmations)
+- **Copy any card** — Hover to reveal copy button, includes title + body + attribution
+- **Share your thoughts** — Private feedback form at the bottom of the Discover tab (does not go to GitHub)
+- Content served from `macparakeet.com/api/discover.json` with bundled fallback for offline use
+
 ### Non-blocking Transcription Progress
 
 File transcription now runs in the background. A progress bar in the bottom bar shows status while you browse history, read other transcripts, or keep dictating.
