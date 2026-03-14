@@ -120,11 +120,11 @@ Identify who said what. MacParakeet can now detect and label individual speakers
 
 ### Chord Hotkey Support
 
-Dictation trigger now supports modifier+key combos — not just single keys. Set Cmd+9, Option+Space, Ctrl+Shift+D, or any modifier combination as your hotkey. The key recorder in Settings captures the full chord.
+Set modifier+key combos as your dictation trigger — not just single keys. Cmd+9, Option+Space, Ctrl+Shift+D, or any combination you like. The key recorder in Settings captures the full chord.
 
 ### Non-blocking Transcription Progress
 
-File transcription no longer blocks the UI. A progress bar in the bottom bar shows transcription status while you continue using the app — browse history, read other transcripts, or keep dictating.
+File transcription now runs in the background. A progress bar in the bottom bar shows status while you browse history, read other transcripts, or keep dictating.
 
 ### Bug Fixes
 
