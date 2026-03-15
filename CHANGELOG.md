@@ -10,21 +10,21 @@ MacParakeet is in active development. This changelog tracks what's been built an
 
 Cut everything slow, ship everything useful, polish what stays.
 
-### Inline Model Selector (0.4.8)
-
-Switch LLM models directly from the chat input bar or summary pane — no need to navigate to Settings. The selector shows suggested models for your active provider with a compact dropdown. Disabled during streaming to prevent mid-response confusion.
-
-### Delete Transcriptions (0.4.7)
-
-Right-click any transcription in the sidebar to delete it. Cleans up both the database record and any downloaded audio files.
-
 ### Transcription Progress in Menu Bar (0.4.9)
 
 The menu bar icon now shows a yellow processing dot while file or YouTube transcription is running. Useful when you've navigated away from the app — you can tell at a glance that your transcription is still in progress. Dictation recording (red dot) takes priority if both are active.
 
+### Inline Model Selector (0.4.8)
+
+Switch LLM models directly from the chat input bar or summary pane — no need to navigate to Settings. The selector shows suggested models for your active provider with a compact dropdown. Disabled during streaming to prevent mid-response confusion.
+
 ### Menu Bar Icon Polish (0.4.8)
 
 Fixed the menu bar icon glyph changing color when showing recording (red) or processing (yellow) status indicators. The parakeet icon now stays consistent across all states.
+
+### Delete Transcriptions (0.4.7)
+
+Right-click any transcription in the sidebar to delete it. Cleans up both the database record and any downloaded audio files.
 
 ### Smarter Filler Removal (0.4.7)
 
