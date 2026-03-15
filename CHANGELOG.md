@@ -10,6 +10,26 @@ MacParakeet is in active development. This changelog tracks what's been built an
 
 Cut everything slow, ship everything useful, polish what stays.
 
+### Inline Model Selector (0.4.8)
+
+Switch LLM models directly from the chat input bar or summary pane — no need to navigate to Settings. The selector shows suggested models for your active provider with a compact dropdown. Disabled during streaming to prevent mid-response confusion.
+
+### Delete Transcriptions (0.4.7)
+
+Right-click any transcription in the sidebar to delete it. Cleans up both the database record and any downloaded audio files.
+
+### Menu Bar Icon Polish (0.4.8)
+
+Fixed the menu bar icon glyph changing color when showing recording (red) or processing (yellow) status indicators. The parakeet icon now stays consistent across all states.
+
+### Smarter Filler Removal (0.4.7)
+
+The clean text pipeline now only removes actual hesitation sounds (um, uh, umm, uhh) — previously it was too aggressive and could strip intentional words.
+
+### Cancel Transcription Fix (0.4.7)
+
+Cancelling a transcription now properly terminates all subprocesses (FFmpeg, yt-dlp) with a confirmation dialog, instead of leaving orphaned processes.
+
 ### LLM Provider Integration
 
 Bring your own API key and unlock AI-powered transcript features. Connect any OpenAI-compatible provider — or Anthropic and Ollama natively — and get instant summaries and conversational Q&A for any transcription.
